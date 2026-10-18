@@ -1,0 +1,114 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "yuniruyuni 共通の Renovate preset。各リポジトリは extends: [\"github>yuniruyuni/renovate-config\"] で取り込み、リポジトリ固有の packageRules だけを足す",
+  "extends": [
+    "config:recommended",
+    "docker:pinDigests",
+    "helpers:pinGitHubActionDigests",
+    ":configMigration"
+  ],
+  "timezone": "Asia/Tokyo",
+  "labels": ["dependencies"],
+  "dependencyDashboard": false,
+  "prConcurrentLimit": 6,
+
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
+
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "minimumReleaseAge": null,
+    "labels": ["security"]
+  },
+
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
+
+  "packageRules": [
+    {
+      "description": "Group minor and patch updates",
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "minor-patch updates"
+    },
+    {
+      "description": "Digest pins move with their tag, so batch them weekly instead of one PR per action/image",
+      "matchUpdateTypes": ["digest", "pinDigest"],
+      "groupName": "digests",
+      "schedule": ["before 6am on monday"]
+    },
+    {
+      "description": "React",
+      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"],
+      "groupName": "react"
+    },
+    {
+      "description": "tRPC",
+      "matchPackageNames": ["@trpc/*", "@hono/trpc-server"],
+      "groupName": "trpc"
+    },
+    {
+      "description": "TanStack",
+      "matchPackageNames": ["@tanstack/*"],
+      "groupName": "tanstack"
+    },
+    {
+      "description": "i18n",
+      "matchPackageNames": ["i18next", "i18next-*", "react-i18next"],
+      "groupName": "i18n"
+    },
+    {
+      "description": "dnd-kit",
+      "matchPackageNames": ["@dnd-kit/*"],
+      "groupName": "dnd-kit"
+    },
+    {
+      "description": "Testing",
+      "matchPackageNames": [
+        "@testing-library/*",
+        "@playwright/test",
+        "vitest",
+        "jsdom",
+        "happy-dom",
+        "@happy-dom/*",
+        "bun-bagel"
+      ],
+      "groupName": "testing"
+    },
+    {
+      "description": "Build tools",
+      "matchPackageNames": [
+        "typescript",
+        "tailwindcss",
+        "@tailwindcss/*",
+        "vite",
+        "@vitejs/*",
+        "postcss",
+        "autoprefixer",
+        "sharp",
+        "sharp-ico",
+        "npm-run-all2"
+      ],
+      "groupName": "build-tools"
+    },
+    {
+      "description": "Linters",
+      "matchPackageNames": ["@biomejs/*"],
+      "groupName": "linters"
+    },
+    {
+      "description": "Types",
+      "matchPackageNames": ["@types/*"],
+      "groupName": "types"
+    },
+    {
+      "description": "GitHub Actions",
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions",
+      "commitMessagePrefix": "ci(deps):",
+      "addLabels": ["github-actions"]
+    }
+  ]
+}
