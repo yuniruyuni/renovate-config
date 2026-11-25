@@ -109,6 +109,12 @@
       "groupName": "github-actions",
       "commitMessagePrefix": "ci(deps):",
       "addLabels": ["github-actions"]
+    },
+    {
+      "description": "PostgreSQL は 18 系に留める。移行に使う pgschema が 19 に未対応 (1.15.0 / 2.0.0 とも supported: 14-18) で、本番 (yunirun の dbImage) も 18。pgschema が対応したらこのルールを外す",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["postgres"],
+      "allowedVersions": "<19"
     }
   ]
 }
